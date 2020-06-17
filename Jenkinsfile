@@ -7,11 +7,16 @@ node {
         checkout scm
     }
 
+     stage('Initialize'){
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
+
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("gsilvaandrade/node-docker-jenkins")
+        app = dockerHome.build("gsilvaandrade/node-docker-jenkins")
     }
 
     stage('Test image') {
